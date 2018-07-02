@@ -54,7 +54,7 @@ local function factory(args)
 
     if not fs.notification_preset then
         fs.notification_preset = {
-            font = "Tamzen 8",
+            font = "Monospace 10",
             fg   = "#FFFFFF",
             bg   = "#000000"
         }

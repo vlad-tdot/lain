@@ -36,35 +36,39 @@ local function factory(args)
 	    preset  = wifi.nitification_preset,
 	    timeout = seconds or 5
         })
+
+
     end
 
 
 
-    function wifi.update()
-      helpers.async("iwgetid -r", 
-       function (ssid)
-	 local file = open(wififile)
-	 local wcontent
-	 if file then
-	     wcontent = file:read("*all")
-	     file:close()
-	 end
 
-	 local pattern = " (%-%d+)%."
-	 wifi_link = wcontent:match(pattern) or "--"
-	 widget = wifi.widget
-	 settings()
-    	 wifi.notification_preset.text = ssid
-       end
-      )
-     end	-- function wifi.update()
+    function wifi.update()
+      helpers.async({ shell, "-c", "iwgetid", function (f) 
+	local f = open(wififile)
+	local wcontent
+	if f then
+	    wcontent = f:read("*all")
+	    f:close()
+	end
+	
+	
+
+	local pattern = " (%-%d+)%."
+
+	
+	wifi_link = wcontent:match(pattern) or "--"
+	widget = wifi.widget
+	settings()
     
+    end)
+    end
+    	wifi.notification_preset.text = "test"
     if showpopup == "on" then
         wifi.widget:connect_signal('mouse::enter', function () wifi.show(0) end)
 	wifi.widget:connect_signal('mouse::leave', function () wifi.hide() end)
-    end		-- if showpopup
+    end
     
-
     helpers.newtimer("wifi", timeout, wifi.update)
     
     return wifi

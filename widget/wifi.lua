@@ -43,20 +43,20 @@ local function factory(args)
     function wifi.update()
       helpers.async("iwgetid -r", 
        function (ssid)
-	 local file = open(wififile)
-	 local wcontent
-	 if file then
-	     wcontent = file:read("*all")
-	     file:close()
-	 end
+	    local file = open(wififile)
+	    local wcontent
+	    if file then
+	        wcontent = file:read("*all")
+	        file:close()
+	    end
 
-	 local pattern = " (%-%d+)%."
-	 wifi_link = wcontent:match(pattern) or "--"
-	 widget = wifi.widget
-	 settings()
+	    local pattern = " (%-%d+)%."
+	    wifi_link = wcontent:match(pattern) or "--"
+	    widget = wifi.widget
+	    settings()
     	 wifi.notification_preset.text = ssid
-       end
-      )
+       end  -- function (ssid)
+      )     -- end helpers.async
      end	-- function wifi.update()
     
     if showpopup == "on" then

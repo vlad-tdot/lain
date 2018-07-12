@@ -24,7 +24,7 @@ local tonumber   = tonumber
 local function factory(args)
     local bat       = { widget = wibox.widget.textbox() }
     local args      = args or {}
-    local timeout   = args.timeout or 30
+    local timeout   = args.timeout or 5
     local batteries = args.batteries or (args.battery and {args.battery}) or {"BAT0"}
     local ac        = args.ac or "AC0"
     local notify    = args.notify or "on"
